@@ -14,4 +14,16 @@ class VideosAPITest < ActionDispatch::IntegrationTest
 
         assert_equal 2, videos.length
     end
+
+    test 'return a specific video' do
+        video = Video.first
+
+        get "/videos/#{video.id}"
+
+        assert_equal 200, response.status
+
+        video_response = JSON.parse(response.body, symbolize_names: true)
+
+        assert_equal video.url, video_response[:url]
+    end
 end
