@@ -10,9 +10,9 @@ class VideosAPITest < ActionDispatch::IntegrationTest
 
         assert_equal 200, response.status
 
-        videos = JSON.parse(response.body)
+        server_response = JSON.parse(response.body)
 
-        assert_equal 2, videos.length
+        assert_equal 2, server_response["videos"].length
     end
 
     test 'return a specific video' do
@@ -22,8 +22,8 @@ class VideosAPITest < ActionDispatch::IntegrationTest
 
         assert_equal 200, response.status
 
-        video_response = JSON.parse(response.body, symbolize_names: true)
+        server_response = JSON.parse(response.body, symbolize_names: true)
 
-        assert_equal video.url, video_response[:url]
+        assert_equal video.url, server_response[:video][:url]
     end
 end
