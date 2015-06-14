@@ -10,9 +10,9 @@ class VideosAPITest < ActionDispatch::IntegrationTest
 
         assert_equal 200, response.status
 
-        server_response = JSON.parse(response.body)
+        server_response = json(response.body)
 
-        assert_equal 2, server_response["videos"].length
+        assert_equal 2, server_response[:videos].length
     end
 
     test 'return a specific video' do
@@ -22,8 +22,26 @@ class VideosAPITest < ActionDispatch::IntegrationTest
 
         assert_equal 200, response.status
 
-        server_response = JSON.parse(response.body, symbolize_names: true)
+        server_response = json(response.body)
 
         assert_equal video.url, server_response[:video][:url]
+    end
+
+    test 'create new video' do
+        post '/videos',
+             { video:
+                {
+                    url: "http://www.test.com/videourl",
+                    description: "This is a description"
+                }
+             }.to_json,
+             { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
+
+        assert_equal 201, response.status
+        assert_equal Mime::JSON, response.content_type
+
+        video = json(response.body)[:video]
+        assert_equal api_video_url(video[:id]), response.location
+
     end
 end
