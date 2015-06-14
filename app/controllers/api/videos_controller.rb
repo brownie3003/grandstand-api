@@ -13,6 +13,8 @@ class API::VideosController < ApplicationController
         video = Video.new(video_params)
         if video.save
             render json: video, status: :created, location: api_video_url(video)
+        else
+            render json: video.errors, status: :unprocessable_entity
         end
     end
 

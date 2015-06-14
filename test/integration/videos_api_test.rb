@@ -42,6 +42,20 @@ class VideosAPITest < ActionDispatch::IntegrationTest
 
         video = json(response.body)[:video]
         assert_equal api_video_url(video[:id]), response.location
+    end
 
+    test 'does not create video with empty url' do
+        post '/videos',
+             {
+                video:
+                    {
+                        url: nil,
+                        description: "This is a description"
+                    }
+             }.to_json,
+             { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
+
+        assert_equal 422, response.status
+        assert_equal Mime::JSON, response.content_type
     end
 end
