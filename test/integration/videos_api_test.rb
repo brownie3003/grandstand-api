@@ -28,10 +28,10 @@ class VideosAPITest < ActionDispatch::IntegrationTest
     end
 
     test 'create new video' do
+        source = fixture_file_upload('/videos/test.mp4')
         post '/videos',
              { video:
                 {
-                    url: "http://www.test.com/videourl",
                     description: "This is a description"
                 }
              }.to_json,

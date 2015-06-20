@@ -38,3 +38,5 @@ gem 'spring',        group: :development
 
 gem 'active_model_serializers'
 
+gem 'paperclip', "~> 4.2"
+

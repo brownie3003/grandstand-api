@@ -1,0 +1,6 @@
+<%= form_for @video, :url => api_videos_path do |form| %>
+	<%= form.text_area :description %>
+	<%= form.file_field :source %>
+
+    <%= form.submit %>
+<% end %>
