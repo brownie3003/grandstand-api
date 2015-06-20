@@ -1,13 +1,12 @@
 class API::VideosController < ApplicationController
+    before_action :set_video, only: [:show, :play]
     def index
         videos = Video.all
         render json: videos, status: :ok
     end
 
     def show
-        video = Video.find(params[:id])
-        # render :show
-        render json: video, status: :ok
+        render json: @video, status: :ok
     end
 
     def create
@@ -22,11 +21,15 @@ class API::VideosController < ApplicationController
         end
     end
 
-    # def new
-    #     @video = Video.new
-    # end
+    def play
+        send_file('/Users/Mongoose/Downloads/RailsCasts/' + @video.path)
+    end
 
     private
+        def set_video
+            @video = Video.find(params[:id])
+        end
+
         def video_params
             params.require(:video).permit(:description, :source)
         end

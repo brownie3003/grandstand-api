@@ -4,7 +4,11 @@ Rails.application.routes.draw do
 
     # api namespace
     namespace 'api', path: '/', constraints: { subdomain: 'api' } do
-        resources :videos, only: [:index, :show, :create]
+        resources :videos, only: [:index, :show, :create] do
+            member do
+                get :play
+            end
+        end
     end
 
     # You can have the root of your site routed with "root"
