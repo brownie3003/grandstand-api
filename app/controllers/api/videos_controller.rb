@@ -22,7 +22,7 @@ class API::VideosController < ApplicationController
     end
 
     def play
-        send_file('/Users/Mongoose/Downloads/RailsCasts/' + @video.path)
+        send_file('/Users/Mongoose/Downloads/RailsCasts/' + @video.source)
     end
 
     private
