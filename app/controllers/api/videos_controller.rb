@@ -5,7 +5,7 @@ class API::VideosController < ApplicationController
     end
 
     def show
-        @video = Video.find(params[:id])
+        video = Video.find(params[:id])
         # render :show
         render json: video, status: :ok
     end

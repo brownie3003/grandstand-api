@@ -32,7 +32,8 @@ class VideosAPITest < ActionDispatch::IntegrationTest
         post '/videos',
              { video:
                 {
-                    description: "This is a description"
+                    description: "This is a description",
+                    source: source
                 }
              }.to_json,
              { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
