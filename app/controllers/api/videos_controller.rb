@@ -12,9 +12,8 @@ class API::VideosController < ApplicationController
     def create
         video = Video.new(video_params)
         if video.save
-            # TODO figure out if URL generation happens before upload is complete
-            # or afterwards. If before we won't get stuck here.
-            video.update!(url: absolute_url_to_video)
+            # Would be nicer to do this before the save, but don't have the ID
+            video.update!(url: play_api_video_url(video[:id]))
             render json: video, status: :created, location: api_video_url(video)
         else
             render json: video.errors, status: :unprocessable_entity
@@ -22,7 +21,8 @@ class API::VideosController < ApplicationController
     end
 
     def play
-        send_file('/Users/Mongoose/Downloads/RailsCasts/' + @video.source)
+        # redirect_to rather than send_file
+        redirect_to(@video.source.url)
     end
 
     private
