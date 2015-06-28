@@ -28,15 +28,15 @@ class VideosAPITest < ActionDispatch::IntegrationTest
     end
 
     test 'create new video' do
-        source = fixture_file_upload('/videos/test.mp4')
-        post '/videos',
-             { video:
-                {
-                    description: "This is a description",
-                    source: source
-                }
-             }.to_json,
-             { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
+
+        video_source = {
+            video: {
+                source: fixture_file_upload('/files/videos/test.mp4', 'video/mp4'),
+                description: "hello"
+            }
+        }
+
+        post '/videos', video_source
 
         assert_equal 201, response.status
         assert_equal Mime::JSON, response.content_type
