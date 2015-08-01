@@ -8,10 +8,15 @@
 
 videos = Video.create(
         [
-            { url: "http://www.youtube.com/myvideo",
-              description: "This is my youtube video"
+            {
+                description: "This is my youtube video",
+                source: File.new("#{Rails.root}/test/fixtures/files/videos/test.mp4")
             }, {
-              url: "http://www.vimeo.com/yourvideo",
-              description: "This is your vimeo video"
+                description: "This is my vimeo video",
+                source: File.new("#{Rails.root}/test/fixtures/files/videos/test.mp4")
             }
         ])
+
+Video.all.each do |video|
+    video.update!(url: Rails.application.routes.url_helpers.play_api_video_url(video[:id]))
+end
